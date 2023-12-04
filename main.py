@@ -1,58 +1,58 @@
-#черга через зв'язаний список
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
-
-class Queue:
-    def __init__(self):
-        self.front = None
-        self.rear = None
-
-    def __str__(self):
-        result = []
-        temp = self.front
-        while temp:
-            result.append(str(temp.data))
-            temp = temp.next
-        return "->".join(result)
+"""Завдання 2
+Створіть клас черги з пріоритетами для роботи із
+символьними значеннями.
+Ви маєте створити реалізації для операцій над елементами черги:
+■ IsEmpty — перевірка, чи черга пуста;
+■ IsFull — перевірка черги на заповнення;
+■ InsertWithPriority — додати елемент з пріоритетом у
+чергу;
+ PullHighestPriorityElement — видалення елемента з
+найвищим пріоритетом із черги;
+■ Peek — повернення найбільшого за пріоритетом елемента.
+ Зверніть увагу, що елемент не видаляється з
+черги;
+■ Show — відображення на екрані всіх елементів черги.
+Показуючи елемент, також необхідно вказати і його
+пріоритет.
+На старті додатка відобразіть меню, в якому користувач
+ може вибрати необхідну операцію."""
+class PriorityQueue:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.queue = []
 
     def is_empty(self):
-        return self.front is None
+        return len(self.queue) == 0
 
-    def enqueue(self, data):
-        new_node = Node(data)
-        if self.rear is None:
-            self.front = self.rear = new_node
-            return
-        self.rear.next = new_node
-        self.rear = new_node
+    def is_full(self):
+        return len(self.queue) == self.capacity
 
-    def dequeue(self):
-        if self.is_empty():
-            return "Queue is empty"
-        temp = self.front
-        self.front = temp.next
+    def insert_with_priority(self, item, priority):
+        if not self.is_full():
+            self.queue.append((item, priority))#кортеж (елемент, пріорітет)
+            print(f"Елемент {item} з пріорітетом {priority} додано до черги")
+            self.queue.sort(key=lambda x: x[1])#сортування за пріорітетом
+        else:
+            print("Черга заповнена")
 
-        if self.front is None:
-            self.rear = None
-        return temp.data
+    def pull_hignest_priority_element(self):
+        if not self.is_empty():
+            item, priority = self.queue.pop(0)
+            print(f"Елемент {item} з пріорітетом {priority} вилучено з черги")
+        else:
+            print("Черга порожня")
 
-    def size(self):
-        count = 0
-        temp = self.front
-        while temp:
-            count += 1
-            temp = temp.next
-        return count
+    def peek(self):
+        if not self.is_empty():
+            item, priority = self.queue[0]
+            print(f"Найбільший за пріорітетом {priority} елемент {item}")
+        else:
+            print("Черга порожня")
 
-# Приклад використання черги на основі зв'язаного списку:
-q = Queue()
-q.enqueue(1)
-q.enqueue(2)
-q.enqueue(3)
-print(q)
-
-print("Dequeue:", q.dequeue())  # Видалення елемента з черги
-print("Size of the queue:", q.size())  # Розмір черги
+    def show(self):
+        if not self.is_empty():
+            print("Елементи в черзі")
+            for item, priority in self.queue:
+                print(f"Елемент {item} з {priority}-пріорітетом")
+        else:
+            print("Черга порожня")
