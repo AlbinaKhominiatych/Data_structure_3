@@ -56,3 +56,14 @@ class PriorityQueue:
                 print(f"Елемент {item} з {priority}-пріорітетом")
         else:
             print("Черга порожня")
+
+q = PriorityQueue(6)
+print(q.is_empty())
+q.insert_with_priority("Hello", 1)
+q.insert_with_priority("World", 3)
+q.show()
+q.insert_with_priority("Python", 1)
+q.insert_with_priority("Zero", 1)
+q.insert_with_priority("Apple", 1)
+q.insert_with_priority(1, 2)
+q.show()
