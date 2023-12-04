@@ -10,6 +10,14 @@ class Queue:
         self.front = None
         self.rear = None
 
+    def __str__(self):
+        result = []
+        temp = self.front
+        while temp:
+            result.append(str(temp.data))
+            temp = temp.next
+        return "->".join(result)
+
     def is_empty(self):
         return self.front is None
 
@@ -44,7 +52,7 @@ q = Queue()
 q.enqueue(1)
 q.enqueue(2)
 q.enqueue(3)
-print(q.data)
+print(q)
 
 print("Dequeue:", q.dequeue())  # Видалення елемента з черги
 print("Size of the queue:", q.size())  # Розмір черги
