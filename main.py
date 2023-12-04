@@ -1,34 +1,50 @@
-#черга через класи
+#черга через зв'язаний список
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
 class Queue:
     def __init__(self):
-        self.queue = []
+        self.front = None
+        self.rear = None
 
     def is_empty(self):
-        return len(self.queue) == 0
+        return self.front is None
 
-    def enqueue(self, item):
-        self.queue.append(item)
+    def enqueue(self, data):
+        new_node = Node(data)
+        if self.rear is None:
+            self.front = self.rear = new_node
+            return
+        self.rear.next = new_node
+        self.rear = new_node
 
     def dequeue(self):
-        if not self.is_empty():
-            return self.queue.pop(0)
-        else:
-            return "queue is empty"
+        if self.is_empty():
+            return "Queue is empty"
+        temp = self.front
+        self.front = temp.next
+
+        if self.front is None:
+            self.rear = None
+        return temp.data
 
     def size(self):
-        return len(self.queue)
+        count = 0
+        temp = self.front
+        while temp:
+            count += 1
+            temp = temp.next
+        return count
 
-    def front(self):
-        if not self.is_empty():
-            return self.queue[0]
-        else:
-            return "queue is empty"
-
+# Приклад використання черги на основі зв'язаного списку:
 q = Queue()
 q.enqueue(1)
 q.enqueue(2)
 q.enqueue(3)
-print(q.queue)
-q.dequeue()
-print(q.queue)
-print(q.size())
+print(q.data)
+
+print("Dequeue:", q.dequeue())  # Видалення елемента з черги
+print("Size of the queue:", q.size())  # Розмір черги
